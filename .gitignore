@@ -1,0 +1,37 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+.env.*
+!.env.example
+
+# 🦀 Rust
+**/target/
+**/*.rs.bk
+Cargo.lock
+
+# 📦 Dependency Directories
+node_modules/
+jspm_packages/
+.pnp
+.pnp.js
+
+# 💻 IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# 🍏 Operating System
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
