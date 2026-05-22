@@ -16,7 +16,11 @@ class SubstrateScanner:
         Lazy-loads the Substrate connection to handle connection drops and initialization.
         """
         if self._substrate is None:
-            self._substrate = SubstrateInterface(url=self.rpc_url)
+            self._substrate = SubstrateInterface(
+                url=self.rpc_url,
+                ss58_format=42,
+                type_registry_preset='substrate-node-template'
+            )
         return self._substrate
 
     def scan_address(self, address: str) -> dict:
