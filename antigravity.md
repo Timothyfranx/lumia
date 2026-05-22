@@ -13,23 +13,28 @@ Welcome to the master control and resource center for the **Portaldot Online Min
 
 ---
 
-## 📂 Repository Directory Map
+## 📂 Repository Directory Map (Modular Architecture)
 
-Here are the key technical files and resources available in your workspace:
+The repository has been restructured into a modular, production-ready hierarchy:
 
-### 📢 Demo Day Readiness
-* 🎯 **[demo_day_criteria.md](file:///home/replytim/Desktop/portaldot/demo_day_criteria.md)** 
-  * The exact review criteria (🟢 **Green**, 🟡 **Yellow**, 🔴 **Red** ratings) used by mentors to evaluate projects, plus step-by-step instructions on submitting thread formats in the Discord server.
+### 🐍 1. Backend Module (`/backend`)
+* 🌐 **[app.py](file:///home/replytim/Desktop/portaldot/backend/app.py)** - FastAPI entry point, handling middleware, routers, and CORS.
+* 🔎 **[scanner.py](file:///home/replytim/Desktop/portaldot/backend/scanner.py)** - Core Substrate interface. Dynamically queries the `Identity` and `System` pallets on the Portaldot network.
+* 🧠 **[risk_engine.py](file:///home/replytim/Desktop/portaldot/backend/risk_engine.py)** - AI Risk Assessment engine that analyzes on-chain metrics and generates contextual transaction briefs.
+* ⚙️ **[config.py](file:///home/replytim/Desktop/portaldot/backend/config.py)** - Configuration module for port parameters and public/local RPC connections.
+* 📦 **[requirements.txt](file:///home/replytim/Desktop/portaldot/backend/requirements.txt)** - Locked Python dependencies.
 
-### 🧠 Developer Knowledge Base & Local Node Automation
-* 📚 **[portaldot_knowledge_base.md](file:///home/replytim/Desktop/portaldot/portaldot_knowledge_base.md)**
-  * Comprehensive documentation covering the runtime version blocks (Contracts API v5 vs. v9+), public dev endpoints, native Substrate pallets, and mobile/Codespace node running guides.
-* 🐚 **[setup_node.sh](file:///home/replytim/Desktop/portaldot/setup_node.sh)**
-  * An interactive, fully automated shell script to start, configure, clear lock files, and manage your local Portaldot node.
+### 🦀 2. Smart Contract Module (`/contracts`)
+* 📜 **[lumia_registry](file:///home/replytim/Desktop/portaldot/contracts/lumia_registry/lib.rs)** - The `ink! 5.0` smart contract that provides a cryptographically secure, on-chain mapping of `TransactionHash -> TrustReceipt`.
 
-### 💡 Hackathon Ideation & Strategic Designs
-* 🎨 **[hackathon_ideation.md](file:///home/replytim/.gemini/antigravity-cli/brain/75e5e62f-86ee-495d-82bf-2752d2559f63/hackathon_ideation.md)** *(Antigravity Brain Artifact)*
-  * Five highly original, green-focused, RWA, and AI blueprints tailored to win Portaldot's specific ecosystem narrative.
+### 📚 3. Documentation Module (`/docs`)
+* 🎯 **[demo_day_criteria.md](file:///home/replytim/Desktop/portaldot/demo_day_criteria.md)** - Review rating criteria (🟢 **Green**, 🟡 **Yellow**, 🔴 **Red**) and Discord thread templates.
+* 🛡️ **[SUBSTRATE_NOTICE.md](file:///home/replytim/Desktop/portaldot/docs/SUBSTRATE_NOTICE.md)** - The mandatory core team disclaimer explaining the local node API limitation.
+* 📚 **[portaldot_knowledge_base.md](file:///home/replytim/Desktop/portaldot/portaldot_knowledge_base.md)** - Comprehensive ecosystem technical maps, node runner guides, and workarounds.
+
+### 📝 4. Capsule Logs & Automation
+* 📋 **[summary.md](file:///home/replytim/Desktop/portaldot/summary.md)** - The real-time branch and commit log tracking our exact git history tree.
+* 🐚 **[setup_node.sh](file:///home/replytim/Desktop/portaldot/setup_node.sh)** - Interactive shell script to manage local Substrate node sessions.
 
 ---
 
@@ -38,16 +43,13 @@ Here are the key technical files and resources available in your workspace:
 To guarantee a **🟢 GREEN: Demo Day Ready** rating, we are tailoring our project architecture to directly fulfill the evaluation rules:
 
 1. **Local Node Integration:** Automated through `setup_node.sh`. Supports switching to `substrate-contracts-node` for fully stable local smart contract deployment.
-2. **On-Chain Transactions:** Leverages modern `@polkadot/api` to execute extrinsics with clear, visual console outputs.
+2. **On-Chain Evidence:** Proved by querying the Substrate RPC using `SubstrateScanner` to inspect actual active block data.
 3. **POT Fee Demonstration:** Our frontend UI will explicitly capture and display the gas fees/extrinsic weight consumed by every transaction.
 4. **90-Second Demo Focus:** We will design our project's user journey to fit within a tight **60–90 second** flow, showing one high-value action end-to-end.
-5. **Smart Contract Portability:** Our custom `ink! 4.x` contracts will compile cleanly under standard toolchains, allowing judges to test them instantly in vanilla Substrate environments or deployed live on the public dev node.
+5. **Smart Contract Portability:** Our custom `ink! 5.0` contracts compile cleanly under standard toolchains, allowing judges to test them instantly in vanilla Substrate environments or deployed live on the public dev node.
 
 ---
 
 ## 🛠️ Next Steps: Active Project Roadmap
-1. 🗳️ **Select MVP Concept:** Choose one of the 5 blueprints (e.g., **GreenAnchor** or **ReChain**) or define a custom hybrid.
-2. 🚀 **Initialize Framework:** Spin up the web application skeleton (Vite or Next.js) using the `web_application_development` guidelines.
-3. 📦 **Install Polkadot Dependencies:** Integrate `@polkadot/api` and `@polkadot/api-contract`.
-4. 🏗️ **Write & Verify ink! Contracts:** Code custom business rules in Rust, validating them on a local `substrate-contracts-node`.
-5. 🎨 **Craft Premium UI:** Build a stunning glassmorphic interface featuring live block feeds, POT gas transaction fees, and interactive maps.
+1. 🧠 **Day 3-4 Plan:** Refine LLM prompt details or API credentials in `risk_engine.py` for advanced AI transaction security briefings.
+2. 🎨 **Day 7-8 Plan:** Initialize the Lumia frontend dashboard using Vite (React + TypeScript) to communicate with the FastAPI backend and sign safe transactions via Polkadot{.js}.
