@@ -9,27 +9,26 @@
 | Branch | Status | Summary |
 |---|---|---|
 | `main` | 🛡️ Protected | Production-ready, clean modular structure |
-| `feature/modular-backend` | ✅ Merged | Restructuring monolith main.py into FastAPI sub-modules |
-| `feature/ink-contract-scaffold` | ✅ Merged | Scaffolding ink! 5.0 smart contract for Lumia Registry |
-| `feature/dx-documentation` | ✅ Merged | Establishing developer knowledge bases and judges notice |
+| `feature/modular-backend` | ✅ Merged | Restructured monolithic main.py into FastAPI backend modules |
+| `feature/ink-contract-scaffold` | ✅ Merged | Scaffolded ink! 5.0 smart contract for Lumia Registry |
+| `feature/dx-documentation` | ✅ Merged | Established developer knowledge bases and judges notice |
+| `docs/logs-and-scripts` | ✅ Merged | Added workspace automation scripts, master index, and project log |
 
 ## Commit Log - `main`
+- `merge(logs-and-scripts): integrate master logs, setup_node.sh, and summary.md project capsule log`
+- `merge(ink-contract-scaffold): integrate ink! 5.0 LumiaRegistry smart contract`
+- `merge(modular-backend): integrate FastAPI backend and modular Substrate scanner`
+- `merge(dx-documentation): integrate developer knowledge bases and judges notice`
 - `chore(init): bootstrap project gitignore configurations`
-- `chore(structure): scaffold modular backend and contract structure`
-- `docs: add antigravity.md and demo_day_criteria.md resources`
-- `docs: initialize SUMMARY.md capsule project log`
 
 ## Commit Log - `feature/modular-backend`
-- `feat(backend): initialize backend module directory and requirements`
-- `feat(config): configure environment variables and Portaldot RPC URLs`
-- `feat(scanner): implement robust native Substrate pallet queries`
-- `feat(risk): build dynamic local rules and simulated LLM risk engine`
-- `feat(app): tie modular scanner and risk engines into FastAPI router`
+- `feat(backend): implement FastAPI backend and modular Substrate scanner`
 
 ## Commit Log - `feature/ink-contract-scaffold`
-- `feat(contract): set up ink! 5.0 Cargo configuration and dependencies`
-- `feat(registry): implement LumiaRegistry data structures and admin assertions`
+- `feat(contract): scaffold ink! 5.0 LumiaRegistry smart contract`
 
 ## Commit Log - `feature/dx-documentation`
-- `docs: create Core Team Substrate contracts notice for judges`
-- `docs: update knowledge base to reflect public dev node v9+ capabilities`
+- `docs: establish developer knowledge bases and judges notice`
+
+## Commit Log - `docs/logs-and-scripts`
+- `docs: add antigravity.md master logs, setup_node.sh, and summary.md project capsule log`
