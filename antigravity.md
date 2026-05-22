@@ -51,5 +51,6 @@ To guarantee a **🟢 GREEN: Demo Day Ready** rating, we are tailoring our proje
 ---
 
 ## 🛠️ Next Steps: Active Project Roadmap
-1. 🧠 **Day 3-4 Plan:** Refine LLM prompt details or API credentials in `risk_engine.py` for advanced AI transaction security briefings.
-2. 🎨 **Day 7-8 Plan:** Initialize the Lumia frontend dashboard using Vite (React + TypeScript) to communicate with the FastAPI backend and sign safe transactions via Polkadot{.js}.
+1. 🧠 **Day 3-4 Plan:** Refine LLM prompt details or API credentials in `risk_engine.py` for advanced AI transaction security briefings. (✅ **COMPLETED**: Integrated Groq Llama-3.3-70b-versatile with robust local heuristic fallbacks).
+2. 🏆 **Day 5 Plan:** Finalize on-chain `LumiaRegistry` smart contract deployment and testing configurations for the standard `substrate-contracts-node` environment.
+3. 🎨 **Day 7-8 Plan:** Initialize the Lumia frontend dashboard using Vite (React + TypeScript) to communicate with the FastAPI backend and sign safe transactions via Polkadot{.js}.
