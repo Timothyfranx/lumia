@@ -385,16 +385,12 @@ document.addEventListener("DOMContentLoaded", () => {
             navButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            // Toggle pages visibility
+            // Toggle pages visibility natively with CSS transitions (smooth fade/slide)
             pageContainers.forEach(container => {
                 if (container.id === `page-${pageId}`) {
-                    container.classList.remove("hidden");
-                    container.style.opacity = "0";
-                    setTimeout(() => {
-                        container.style.opacity = "1";
-                    }, 50);
+                    container.classList.add("active");
                 } else {
-                    container.classList.add("hidden");
+                    container.classList.remove("active");
                 }
             });
         });
