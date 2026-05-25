@@ -113,10 +113,11 @@ body {
 
 /* --- Header Section --- */
 .app-header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding: 16px 28px;
+    width: 100%;
 }
 .logo-area {
     display: flex;
@@ -150,6 +151,7 @@ body {
 .system-status {
     display: flex;
     gap: 24px;
+    justify-content: flex-end;
 }
 .status-item {
     display: flex;
