@@ -100,8 +100,11 @@ class LumiaReceiptGenerator:
         elements.append(Spacer(1, 2*cm))
 
         # 4. QR Verification Code
-        qr_img_data = self.generate_qr_base64(tx_hash)
-        qr_img = Image(io.BytesIO(qrcode.make(f"https://lumia.trust/verify/{tx_hash}").tobytes()), width=3*cm, height=3*cm)
+        qr_pil = qrcode.make(f"https://lumia.trust/verify/{tx_hash}")
+        qr_buffer = io.BytesIO()
+        qr_pil.save(qr_buffer, format="PNG")
+        qr_buffer.seek(0)
+        qr_img = Image(qr_buffer, width=3*cm, height=3*cm)
         
         qr_table_data = [
             [qr_img, Paragraph("<b>Scan to Verify</b><br/>Verify this certificate directly on the Portaldot blockchain ledger via the Lumia Protocol portal.", body_style)]
