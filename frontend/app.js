@@ -389,7 +389,11 @@ document.addEventListener("DOMContentLoaded", () => {
             pageContainers.forEach(container => {
                 if (container.id === `page-${pageId}`) {
                     container.classList.add("active");
+                    // Force browser reflow to trigger the smooth CSS opacity transition
+                    container.offsetHeight;
+                    container.classList.add("fade-in");
                 } else {
+                    container.classList.remove("fade-in");
                     container.classList.remove("active");
                 }
             });
