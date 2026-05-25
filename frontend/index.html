@@ -239,6 +239,18 @@
                                 <p>Provide an audited transaction hash above to inspect its cryptographic trust seal, risk score, and registration block details from the smart contract state.</p>
                             </div>
                         </div>
+
+                        <!-- NEW: QR & Download Action Area (Hidden by default) -->
+                        <div id="receipt-actions" class="receipt-actions hidden">
+                            <div class="qr-container glass-panel">
+                                <img id="receipt-qr" src="" alt="Verification QR">
+                                <span>Cryptographic Proof</span>
+                            </div>
+                            <button id="btn-download-pdf" class="btn-download">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>Download PDF Certificate</span>
+                            </button>
+                        </div>
                     </div>
                 </main>
             </div>
