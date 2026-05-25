@@ -6,5 +6,13 @@
         "timestamp_readable": "2026-05-22 13:21:12 UTC",
         "verified": true,
         "onchain": false
+    },
+    "0xa96ad233659d59e960eb382f0a8c487031742eab3052906669ede24ac7421024": {
+        "scanner_id": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "risk_score": 20,
+        "timestamp": 1779689422,
+        "timestamp_readable": "2026-05-25 07:10:22 UTC",
+        "verified": true,
+        "onchain": false
     }
 }

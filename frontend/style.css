@@ -612,6 +612,144 @@ input[type="text"]:focus, input[type="number"]:focus {
     display: none !important;
 }
 
+/* --- Navigation Tabs --- */
+.app-nav {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.nav-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+.nav-btn i {
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+.nav-btn:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.01);
+}
+.nav-btn.active {
+    background: var(--brand-gradient);
+    color: #fff;
+    box-shadow: 0 0 15px var(--brand-glow);
+}
+.nav-btn.active i {
+    color: #fff;
+}
+
+/* --- Pages Wrapper --- */
+.pages-wrapper {
+    position: relative;
+    width: 100%;
+}
+.page-container {
+    transition: opacity 0.3s ease;
+}
+.page-container.hidden {
+    display: none !important;
+}
+
+/* --- Ledger View Layout --- */
+.ledger-container {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+.search-layout {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+}
+.search-layout .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+}
+.search-layout .search-box input {
+    padding-left: 44px;
+    padding-right: 160px;
+    height: 52px;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.35);
+}
+.search-layout .search-icon {
+    position: absolute;
+    left: 16px;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+.btn-primary-search {
+    position: absolute;
+    right: 6px;
+    height: 40px;
+    background: var(--brand-gradient);
+    border: none;
+    color: #fff;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px var(--brand-glow);
+}
+.btn-primary-search:hover {
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4);
+    transform: translateY(-1px);
+}
+.empty-ledger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    text-align: center;
+}
+.empty-ledger-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.empty-ledger-state h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.empty-ledger-state p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    max-width: 400px;
+    line-height: 1.5;
+}
+
 /* --- Footer --- */
 .app-footer {
     text-align: center;

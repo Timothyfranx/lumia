@@ -264,10 +264,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
             
             // Show feedback
-            btnRegister.querySelector("span").textContent = "Receipt Registered!";
+            btnRegister.querySelector("span").textContent = "Receipt Registered! View in Ledger";
             btnRegister.className = "btn-secondary completed";
             btnRegister.querySelector("i").className = "fa-solid fa-circle-check";
             btnRegister.style.color = "var(--clr-low)";
+            btnRegister.style.border = "1px solid var(--clr-low)";
+            
+            // Allow clicking to switch to Ledger page and search automatically
+            btnRegister.disabled = false;
+            btnRegister.style.opacity = "1";
+            btnRegister.onclick = (e) => {
+                e.preventDefault();
+                // Switch tab to Ledger
+                const ledgerTabBtn = document.querySelector('.nav-btn[data-page="ledger"]');
+                if (ledgerTabBtn) ledgerTabBtn.click();
+                // Query immediately
+                btnSearchReceipt.click();
+            };
 
             // Auto-populate search box for verification demonstration
             searchInput.value = generatedHash;
@@ -359,4 +372,31 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
     }
+
+    // --- Navigation Tabs switching ---
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const pageContainers = document.querySelectorAll(".page-container");
+
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const pageId = btn.getAttribute("data-page");
+            
+            // Toggle buttons active state
+            navButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Toggle pages visibility
+            pageContainers.forEach(container => {
+                if (container.id === `page-${pageId}`) {
+                    container.classList.remove("hidden");
+                    container.style.opacity = "0";
+                    setTimeout(() => {
+                        container.style.opacity = "1";
+                    }, 50);
+                } else {
+                    container.classList.add("hidden");
+                }
+            });
+        });
+    });
 });
