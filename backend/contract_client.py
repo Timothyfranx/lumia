@@ -55,7 +55,7 @@ class LumiaContractClient:
         except Exception as e:
             logger.warning(f"Could not connect to Substrate Contracts node ({e}). Operating in Graceful Fallback mode.")
 
-    def register_receipt(self, tx_hash: str, risk_score: int) -> dict:
+    def register_receipt(self, tx_hash: str, risk_score: int, extra_data: dict = None) -> dict:
         """
         Registers a transaction scan receipt.
         If on-chain registration is active, calls register_receipt extrinsic.
@@ -74,6 +74,10 @@ class LumiaContractClient:
             "verified": True,
             "onchain": not self.use_fallback
         }
+
+        # Merge extra data (risk_level, ai_briefing) if provided
+        if extra_data:
+            receipt_data.update(extra_data)
 
         if not self.use_fallback and self.contract:
             try:

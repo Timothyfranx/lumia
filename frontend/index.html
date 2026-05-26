@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/light.css?v=3.0">
 </head>
 <body>
     <!-- Subtle Ambient Background Glows -->
@@ -30,6 +30,19 @@
                     <span>AI TRUST LAYER FOR PORTALDOT</span>
                 </div>
             </div>
+            
+            <!-- 🧭 NAVIGATION TABS -->
+            <nav class="app-nav">
+                <button class="nav-btn active" data-page="scanner">
+                    <i class="fa-solid fa-radar"></i>
+                    <span>Scanner Dashboard</span>
+                </button>
+                <button class="nav-btn" data-page="ledger">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Trust Ledger</span>
+                </button>
+            </nav>
+
             <div class="system-status">
                 <div class="status-item">
                     <span class="status-dot online"></span>
@@ -42,174 +55,207 @@
             </div>
         </header>
 
-        <!-- 📊 MAIN LAYOUT GRID -->
-        <main class="main-grid">
+        <!-- 📄 PAGES WRAPPER -->
+        <div class="pages-wrapper">
             
-            <!-- LEFT PANEL: RISK SCANNER -->
-            <section class="grid-col-left">
-                <!-- SCANFORM CARD -->
-                <div class="glass-panel card scanner-card">
-                    <div class="card-header">
-                        <i class="fa-solid fa-radar"></i>
-                        <h2>AI Safety Scanner</h2>
-                    </div>
-                    <p class="card-desc">Audit any target address across native runtime pallets and generate real-time AI security briefings.</p>
-                    
-                    <form id="scan-form" class="scan-form">
-                        <div class="form-group">
-                            <label for="recipient-address">Recipient Substrate Address</label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-wallet input-icon"></i>
-                                <input type="text" id="recipient-address" placeholder="Enter SS58 Address (e.g. 5FHneW46...)" required
-                                       value="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty">
+            <!-- PAGE 1: SCANNER DASHBOARD -->
+            <div id="page-scanner" class="page-container active fade-in">
+                <!-- 📊 MAIN LAYOUT GRID -->
+                <main class="main-grid">
+
+                    <!-- LEFT PANEL: RISK SCANNER -->
+                    <section class="grid-col-left">
+
+                        <!-- SCANFORM CARD -->
+                        <div class="glass-panel card scanner-card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-radar"></i>
+                                <h2>AI Safety Scanner</h2>
+                            </div>
+                            <p class="card-desc">Audit any target address across native runtime pallets and generate real-time AI security briefings.</p>
+                            
+                            <form id="scan-form" class="scan-form">
+                                <div class="form-group">
+                                    <label for="recipient-address">Recipient Substrate Address</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-wallet input-icon"></i>
+                                        <input type="text" id="recipient-address" placeholder="Enter SS58 Address (e.g. 5FHneW46...)" required
+                                               value="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="tx-amount">Amount</label>
+                                        <div class="input-wrapper">
+                                            <i class="fa-solid fa-coins input-icon"></i>
+                                            <input type="number" id="tx-amount" min="0.01" step="any" value="100.0" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tx-token">Token</label>
+                                        <div class="input-wrapper">
+                                            <i class="fa-solid fa-ticket input-icon"></i>
+                                            <input type="text" id="tx-token" value="POT" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" id="btn-scan" class="btn-primary">
+                                    <span>Execute Safety Scan</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </form>
+                            
+                            <!-- ANIMATED STEP-BY-STEP PROGRESS -->
+                            <div id="scan-progress" class="scan-progress hidden">
+                                <div class="progress-title">Performing On-Chain Diagnostics...</div>
+                                <div class="steps-container">
+                                    <div class="step-item" id="step-connect">
+                                        <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
+                                        <span>Establishing Substrate RPC Handshake</span>
+                                    </div>
+                                    <div class="step-item" id="step-identity">
+                                        <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
+                                        <span>Auditing Native Identity Pallet Records</span>
+                                    </div>
+                                    <div class="step-item" id="step-system">
+                                        <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
+                                        <span>Analyzing System Account Nonce & Age</span>
+                                    </div>
+                                    <div class="step-item" id="step-ai">
+                                        <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
+                                        <span>Consulting Groq Llama-3.3 AI Model</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="tx-amount">Amount</label>
-                                <div class="input-wrapper">
-                                    <i class="fa-solid fa-coins input-icon"></i>
-                                    <input type="number" id="tx-amount" min="0.01" step="any" value="100.0" required>
+                        <!-- POT FEE TELEMETRY CARD -->
+                        <div class="glass-panel card telemetry-card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <h2>POT Gas Telemetry</h2>
+                            </div>
+                            <div class="telemetry-grid">
+                                <div class="telemetry-item">
+                                    <span class="telemetry-label">Extrinsic Weight</span>
+                                    <span class="telemetry-val" id="val-weight">215,928,000</span>
+                                </div>
+                                <div class="telemetry-item">
+                                    <span class="telemetry-label">Estimated POT Fee</span>
+                                    <span class="telemetry-val highlight" id="val-fee">0.0042 POT</span>
+                                </div>
+                                <div class="telemetry-item">
+                                    <span class="telemetry-label">Registry State Cost</span>
+                                    <span class="telemetry-val" id="val-deposit">0.0150 POT</span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="tx-token">Token</label>
-                                <div class="input-wrapper">
-                                    <i class="fa-solid fa-ticket input-icon"></i>
-                                    <input type="text" id="tx-token" value="POT" readonly>
-                                </div>
+                            <div class="gas-indicator-bar">
+                                <div class="gas-fill" style="width: 25%;"></div>
                             </div>
                         </div>
-                        
-                        <button type="submit" id="btn-scan" class="btn-primary">
-                            <span>Execute Safety Scan</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
+                    </section>
                     
-                    <!-- ANIMATED STEP-BY-STEP PROGRESS -->
-                    <div id="scan-progress" class="scan-progress hidden">
-                        <div class="progress-title">Performing On-Chain Diagnostics...</div>
-                        <div class="steps-container">
-                            <div class="step-item" id="step-connect">
-                                <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
-                                <span>Establishing Substrate RPC Handshake</span>
-                            </div>
-                            <div class="step-item" id="step-identity">
-                                <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
-                                <span>Auditing Native Identity Pallet Records</span>
-                            </div>
-                            <div class="step-item" id="step-system">
-                                <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
-                                <span>Analyzing System Account Nonce & Age</span>
-                            </div>
-                            <div class="step-item" id="step-ai">
-                                <i class="fa-solid fa-circle-notch fa-spin step-icon"></i>
-                                <span>Consulting Groq Llama-3.3 AI Model</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- POT FEE TELEMETRY CARD -->
-                <div class="glass-panel card telemetry-card">
-                    <div class="card-header">
-                        <i class="fa-solid fa-gauge-high"></i>
-                        <h2>POT Gas Telemetry</h2>
-                    </div>
-                    <div class="telemetry-grid">
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Extrinsic Weight</span>
-                            <span class="telemetry-val" id="val-weight">215,928,000</span>
-                        </div>
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Estimated POT Fee</span>
-                            <span class="telemetry-val highlight" id="val-fee">0.0042 POT</span>
-                        </div>
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Registry State Cost</span>
-                            <span class="telemetry-val" id="val-deposit">0.0150 POT</span>
-                        </div>
-                    </div>
-                    <div class="gas-indicator-bar">
-                        <div class="gas-fill" style="width: 25%;"></div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- RIGHT PANEL: SCAN RESULTS & TRUST REGISTRY -->
-            <section class="grid-col-right">
-                
-                <!-- SCAN RESULT DISPLAY -->
-                <div id="result-container" class="result-container empty-state">
-                    <!-- Empty state mockup -->
-                    <div class="empty-state-content" id="empty-state-msg">
-                        <i class="fa-solid fa-shield-heart empty-icon"></i>
-                        <h3>System Ready for Scan</h3>
-                        <p>Input transaction parameters on the left to initiate real-time AI security analysis.</p>
-                    </div>
-                    
-                    <!-- Result panel (hidden initially) -->
-                    <div id="result-panel" class="hidden">
-                        <div class="glass-panel card score-card">
-                            <div class="score-header-layout">
-                                <div>
-                                    <h3 class="result-title">Risk Assessment</h3>
-                                    <div class="badge" id="risk-level-badge">LOW RISK</div>
-                                </div>
-                                <div class="radial-score-container">
-                                    <span class="score-number" id="risk-score-val">20</span>
-                                    <span class="score-denom">/100</span>
-                                </div>
+                    <!-- RIGHT PANEL: SCAN RESULTS & TRUST REGISTRY -->
+                    <section class="grid-col-right">
+                        <!-- SCAN RESULT DISPLAY -->
+                        <div id="result-container" class="result-container empty-state">
+                            <!-- Empty state mockup -->
+                            <div class="empty-state-content" id="empty-state-msg">
+                                <i class="fa-solid fa-shield-heart empty-icon"></i>
+                                <h3>System Ready for Scan</h3>
+                                <p>Input transaction parameters on the left to initiate real-time AI security analysis.</p>
                             </div>
                             
-                            <div class="reasons-list-container">
-                                <h4>On-Chain Heuristics Summary</h4>
-                                <ul id="reasons-list" class="reasons-list"></ul>
+                            <!-- Result panel (hidden initially) -->
+                            <div id="result-panel" class="hidden">
+                                <div class="glass-panel card score-card">
+                                    <div class="score-header-layout">
+                                        <div>
+                                            <h3 class="result-title">Risk Assessment</h3>
+                                            <div class="badge" id="risk-level-badge">LOW RISK</div>
+                                        </div>
+                                        <div class="radial-score-container">
+                                            <span class="score-number" id="risk-score-val">20</span>
+                                            <span class="score-denom">/100</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="reasons-list-container">
+                                        <h4>On-Chain Heuristics Summary</h4>
+                                        <ul id="reasons-list" class="reasons-list"></ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- AI BRIEFING CARD -->
+                                <div class="glass-panel card ai-briefing-card">
+                                    <div class="card-header ai-header">
+                                        <i class="fa-solid fa-brain"></i>
+                                        <h2>Lumia AI Safety Briefing</h2>
+                                    </div>
+                                    <div class="ai-briefing-content" id="ai-briefing-text"></div>
+                                    
+                                    <!-- REGISTER TO SMART CONTRACT BUTTON -->
+                                    <div class="registry-action-box">
+                                        <button id="btn-register" class="btn-secondary">
+                                            <i class="fa-solid fa-signature"></i>
+                                            <span>Register Trust Receipt On-Chain</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </section>
+                </main>
+            </div>
+
+            <!-- PAGE 2: TRUST LEDGER -->
+            <div id="page-ledger" class="page-container">
+                <main class="ledger-container">
+
+                    <div class="glass-panel card registry-card full-width">
+                        <div class="card-header">
+                            <i class="fa-solid fa-list-check"></i>
+                            <h2>Lumia On-Chain Trust Registry Explorer</h2>
+                        </div>
+                        <p class="card-desc">Query and verify immutable transaction trust receipts directly from the custom Lumia ink! 5.0 smart contract deployed on the Substrate node network.</p>
                         
-                        <!-- AI BRIEFING CARD -->
-                        <div class="glass-panel card ai-briefing-card">
-                            <div class="card-header ai-header">
-                                <i class="fa-solid fa-brain"></i>
-                                <h2>Lumia AI Safety Briefing</h2>
-                            </div>
-                            <div class="ai-briefing-content" id="ai-briefing-text"></div>
-                            
-                            <!-- REGISTER TO SMART CONTRACT BUTTON -->
-                            <div class="registry-action-box">
-                                <button id="btn-register" class="btn-secondary">
-                                    <i class="fa-solid fa-signature"></i>
-                                    <span>Register Trust Receipt On-Chain</span>
+                        <div class="search-layout">
+                            <div class="search-box">
+                                <i class="fa-solid fa-key search-icon"></i>
+                                <input type="text" id="search-tx-hash" placeholder="Enter Audited Transaction Hash (e.g. 0xa96ad233...)">
+                                <button id="btn-search-receipt" class="btn-primary-search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <span>Query Ledger</span>
                                 </button>
                             </div>
                         </div>
+                        
+                        <div id="registry-result" class="registry-result-container empty-ledger">
+                            <div class="empty-ledger-state">
+                                <i class="fa-solid fa-database empty-icon"></i>
+                                <h3>No Query Executed</h3>
+                                <p>Provide an audited transaction hash above to inspect its cryptographic trust seal, risk score, and registration block details from the smart contract state.</p>
+                            </div>
+                        </div>
+
+                        <!-- NEW: QR & Download Action Area (Hidden by default) -->
+                        <div id="receipt-actions" class="receipt-actions hidden">
+                            <div class="qr-container glass-panel">
+                                <img id="receipt-qr" src="" alt="Verification QR">
+                                <span>Cryptographic Proof</span>
+                            </div>
+                            <button id="btn-download-pdf" class="btn-download">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>Download PDF Certificate</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- SMART CONTRACT LEDGER REGISTRY -->
-                <div class="glass-panel card registry-card">
-                    <div class="card-header">
-                        <i class="fa-solid fa-list-check"></i>
-                        <h2>On-Chain Trust Registry</h2>
-                    </div>
-                    <p class="card-desc">Verify generated trust receipts directly from the Lumia Registry custom ink! 5.0 smart contract.</p>
-                    
-                    <div class="search-box">
-                        <input type="text" id="search-tx-hash" placeholder="Enter Transaction Hash (0x...)">
-                        <button id="btn-search-receipt" class="btn-icon">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
-                    
-                    <div id="registry-result" class="registry-result-container">
-                        <!-- Query results will appear here -->
-                    </div>
-                </div>
-            </section>
-        </main>
+                </main>
+            </div>
+            
+        </div>
         
         <!-- 📁 FOOTER -->
         <footer class="app-footer">
@@ -217,6 +263,6 @@
         </footer>
     </div>
 
-    <script src="/static/app.js"></script>
+    <script src="/static/light.js?v=3.0"></script>
 </body>
 </html>

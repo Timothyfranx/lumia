@@ -1,12 +1,14 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 from backend.config import PORTALDOT_RPC, API_HOST, API_PORT
 from backend.scanner import SubstrateScanner
 from backend.risk_engine import AIRiskEngine
 from backend.contract_client import LumiaContractClient
+from backend.pdf_generator import LumiaReceiptGenerator
+import io
 
 app = FastAPI(
     title="Lumia Trust Layer API",
@@ -27,6 +29,7 @@ app.add_middleware(
 scanner = SubstrateScanner()
 risk_engine = AIRiskEngine()
 contract_client = LumiaContractClient()
+receipt_generator = LumiaReceiptGenerator()
 
 # Mount frontend files under /static
 app.mount("/static", StaticFiles(directory="/home/replytim/Desktop/portaldot/frontend"), name="static")
@@ -47,6 +50,8 @@ class TransactionRequest(BaseModel):
 class RegisterRequest(BaseModel):
     tx_hash: str = Field(..., description="The Substrate transaction hash")
     risk_score: int = Field(..., description="The risk score computed by Lumia scanner")
+    risk_level: str = Field("Low", description="The human-readable risk level")
+    ai_briefing: str = Field("", description="The AI security briefing text")
 
 @app.get("/health")
 async def health_check():
@@ -99,10 +104,20 @@ async def register_receipt(request: RegisterRequest):
     Registers a transaction safety receipt on the custom ink! 5.0 Lumia Registry contract.
     """
     try:
-        receipt = contract_client.register_receipt(request.tx_hash, request.risk_score)
+        # We pass additional fields for the fallback storage
+        extra_data = {
+            "risk_level": request.risk_level,
+            "ai_briefing": request.ai_briefing
+        }
+        receipt = contract_client.register_receipt(request.tx_hash, request.risk_score, extra_data)
+        
+        # Generate QR code for immediate UI feedback
+        qr_code = receipt_generator.generate_qr_base64(request.tx_hash)
+        
         return {
             "success": True,
-            "receipt": receipt
+            "receipt": receipt,
+            "qr_code_base64": qr_code
         }
     except Exception as e:
         raise HTTPException(
@@ -117,11 +132,39 @@ async def get_receipt(tx_hash: str):
     """
     try:
         result = contract_client.get_receipt(tx_hash)
+        if result["success"]:
+            # Inject QR code into the result
+            result["qr_code_base64"] = receipt_generator.generate_qr_base64(tx_hash)
         return result
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Lumia Registry Query Failure: {str(e)}"
+        )
+
+@app.get("/receipt/{tx_hash}/pdf")
+async def get_receipt_pdf(tx_hash: str):
+    """
+    Generates and streams a professional PDF trust certificate for a transaction.
+    """
+    try:
+        result = contract_client.get_receipt(tx_hash)
+        if not result["success"]:
+            raise HTTPException(status_code=404, detail="Receipt not found")
+        
+        pdf_bytes = receipt_generator.generate_pdf_bytes(result["receipt"], tx_hash)
+        
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=Lumia_Receipt_{tx_hash[:10]}.pdf"
+            }
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"PDF Generation Failed: {str(e)}"
         )
 
 if __name__ == "__main__":

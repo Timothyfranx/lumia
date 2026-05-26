@@ -255,7 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     tx_hash: generatedHash,
-                    risk_score: currentScanResult.risk_score
+                    risk_score: currentScanResult.risk_score,
+                    risk_level: currentScanResult.risk_level,
+                    ai_briefing: currentScanResult.ai_briefing
                 })
             });
 
@@ -264,16 +266,27 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
             
             // Show feedback
-            btnRegister.querySelector("span").textContent = "Receipt Registered!";
+            btnRegister.querySelector("span").textContent = "Receipt Registered! View in Ledger";
             btnRegister.className = "btn-secondary completed";
             btnRegister.querySelector("i").className = "fa-solid fa-circle-check";
             btnRegister.style.color = "var(--clr-low)";
+            btnRegister.style.border = "1px solid var(--clr-low)";
+            
+            // Display receipt details in registry instantly
+            displayRegistryReceipt(data.receipt, generatedHash, data.qr_code_base64);
+
+            // Allow clicking to switch to Ledger page and search automatically
+            btnRegister.disabled = false;
+            btnRegister.style.opacity = "1";
+            btnRegister.onclick = (e) => {
+                e.preventDefault();
+                // Switch tab to Ledger
+                const ledgerTabBtn = document.querySelector('.nav-btn[data-page="ledger"]');
+                if (ledgerTabBtn) ledgerTabBtn.click();
+            };
 
             // Auto-populate search box for verification demonstration
             searchInput.value = generatedHash;
-            
-            // Display receipt details in registry instantly
-            displayRegistryReceipt(data.receipt);
 
         } catch (error) {
             console.error("Registry error:", error);
@@ -322,9 +335,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function displayRegistryReceipt(receipt, hashVal = null) {
+    function displayRegistryReceipt(receipt, hashVal = null, qrBase64 = null) {
         const displayHash = hashVal || currentTxHash || "0x...";
-        
+        const receiptActions = document.getElementById("receipt-actions");
+        const qrImg = document.getElementById("receipt-qr");
+        const btnDownload = document.getElementById("btn-download-pdf");
+
+        // 1. Show Main Data Panel
         registryResult.innerHTML = `
             <div class="registry-result-details">
                 <div class="success-msg" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
@@ -358,5 +375,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
         `;
+
+        // 2. Show Receipt Actions Area (QR & Download)
+        if (receiptActions) {
+            receiptActions.classList.remove("hidden");
+            
+            // Set QR Code
+            if (qrBase64) {
+                qrImg.src = `data:image/png;base64,${qrBase64}`;
+            } else {
+                // If not provided in instant callback, the backend /receipt endpoint will return it
+                fetch(`/receipt/${displayHash}`).then(r => r.json()).then(data => {
+                    if (data.qr_code_base64) qrImg.src = `data:image/png;base64,${data.qr_code_base64}`;
+                });
+            }
+
+            // Wire up Download Button
+            btnDownload.onclick = () => {
+                window.open(`/receipt/${displayHash}/pdf`, "_blank");
+            };
+        }
     }
+
+    // --- Navigation Tabs switching ---
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const pageContainers = document.querySelectorAll(".page-container");
+
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const pageId = btn.getAttribute("data-page");
+            
+            // Toggle buttons active state
+            navButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Toggle pages visibility natively with CSS transitions (smooth fade/slide)
+            pageContainers.forEach(container => {
+                if (container.id === `page-${pageId}`) {
+                    container.classList.add("active");
+                    // Force browser reflow to trigger the smooth CSS opacity transition
+                    container.offsetHeight;
+                    container.classList.add("fade-in");
+                } else {
+                    container.classList.remove("fade-in");
+                    container.classList.remove("active");
+                }
+            });
+        });
+    });
 });

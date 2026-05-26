@@ -6,5 +6,33 @@
         "timestamp_readable": "2026-05-22 13:21:12 UTC",
         "verified": true,
         "onchain": false
+    },
+    "0xa96ad233659d59e960eb382f0a8c487031742eab3052906669ede24ac7421024": {
+        "scanner_id": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "risk_score": 20,
+        "timestamp": 1779689422,
+        "timestamp_readable": "2026-05-25 07:10:22 UTC",
+        "verified": true,
+        "onchain": false
+    },
+    "0x3db3b6e6976d259bd442e61fd1a20c07e8c9a890573444a8f11a74322c2e9233": {
+        "scanner_id": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "risk_score": 0,
+        "timestamp": 1779804656,
+        "timestamp_readable": "2026-05-26 15:10:56 UTC",
+        "verified": true,
+        "onchain": false,
+        "risk_level": "Low",
+        "ai_briefing": "To provide a comprehensive security briefing for the given Portaldot blockchain transaction, we've analyzed the provided details. Here's a 3-point security briefing:\n\n* \u2705 The recipient has a verified on-chain identity and a history of 15 transactions, indicating a legitimate and active wallet. This reduces the risk of the transaction being associated with fraudulent activities.\n* \u26a0\ufe0f Although the risk score is 0/100, which is low, it's essential to be cautious with transactions involving significant amounts, such as 100.0 POT in this case. Ensure that you are sending funds to a trusted recipient to avoid any potential disputes.\n* \u2705 Given the recipient's verified identity, active transaction history, and the low risk score, it is reasonable to proceed with the transaction. The recipient's balance of 5.25 POT and the registration of their on-chain identity further support the legitimacy of this transaction, suggesting that you can confidently send the 100.0 POT to the specified address."
+    },
+    "0x0432e7b8b3ba8e3a589a475aeca714fa90520922ca54413136fb7663afdbd5db": {
+        "scanner_id": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "risk_score": 0,
+        "timestamp": 1779804658,
+        "timestamp_readable": "2026-05-26 15:10:58 UTC",
+        "verified": true,
+        "onchain": false,
+        "risk_level": "Low",
+        "ai_briefing": "To provide a comprehensive security briefing for the given Portaldot blockchain transaction, we've analyzed the provided details. Here's a 3-point security briefing:\n\n* \u2705 The recipient has a verified on-chain identity and a history of 15 transactions, indicating a legitimate and active wallet. This reduces the risk of the transaction being associated with fraudulent activities.\n* \u26a0\ufe0f Although the risk score is 0/100, which is low, it's essential to be cautious with transactions involving significant amounts, such as 100.0 POT in this case. Ensure that you are sending funds to a trusted recipient to avoid any potential disputes.\n* \u2705 Given the recipient's verified identity, active transaction history, and the low risk score, it is reasonable to proceed with the transaction. The recipient's balance of 5.25 POT and the registration of their on-chain identity further support the legitimacy of this transaction, suggesting that you can confidently send the 100.0 POT to the specified address."
     }
 }
